@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+const blogEntries = await getCollection("recipes");
+---
+
+<Layout title="all recipes">
+  <ul class="sm:max-w-xl sm:px-24 mx-auto">
+    {
+      blogEntries.map((entry) => (
+        <li id="recipe-list" class="text-sm py-2">
+          <a href={`/recipes/${entry.slug}`}>{entry.data.title}  </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

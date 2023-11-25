@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("recipes");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title="recipe">
+  <div
+    class="sm:max-w-xl sm:px-24 prose prose-h3:font-light  mx-auto prose-h2:font-light prose-h2:italic prose-h2:text-xl prose-h3:text-lg prose-li:text-sm prose-li:font-sans prose-li:text-zinc-700"
+  >
+    <Content />
+  </div>
+</Layout>
